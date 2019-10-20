@@ -2,24 +2,23 @@
 <html lang="zh">
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-<title>MySQL 安装与配置 - USC IHT TEAM</title>
+<title>Tags - USC IHT TEAM</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-    <meta name="description" content="摘要部分 MySQL安装步骤 作者: 杨诗达">
-<meta name="keywords" content="Technology,MySQL">
-<meta property="og:type" content="article">
-<meta property="og:title" content="MySQL 安装与配置">
-<meta property="og:url" content="http://yoursite.com/2019/09/25/a7-md/index.html">
+    <meta name="description" content="学习是人类进步的源泉">
+<meta name="keywords" content="Competition_information,Technology,Team_template,MySQL,ACM,C&#x2F;C++">
+<meta property="og:type" content="website">
+<meta property="og:title" content="USC IHT TEAM">
+<meta property="og:url" content="http://yoursite.com/tags/index.html">
 <meta property="og:site_name" content="USC IHT TEAM">
-<meta property="og:description" content="摘要部分 MySQL安装步骤 作者: 杨诗达">
+<meta property="og:description" content="学习是人类进步的源泉">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/images/og_image.png">
-<meta property="og:updated_time" content="2019-09-27T13:41:21.508Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="MySQL 安装与配置">
-<meta name="twitter:description" content="摘要部分 MySQL安装步骤 作者: 杨诗达">
+<meta name="twitter:title" content="USC IHT TEAM">
+<meta name="twitter:description" content="学习是人类进步的源泉">
 <meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
 
 
@@ -94,7 +93,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/og_image.png" alt="MySQL 安装与配置" height="28">
+                <img src="/images/og_image.png" alt="USC IHT TEAM" height="28">
             
             </a>
         </div>
@@ -104,7 +103,7 @@
                 
                 <a class="navbar-item" href="/">主页</a>
                 
-                <a class="navbar-item" href="/tags">分类</a>
+                <a class="navbar-item is-active" href="/tags">分类</a>
                 
                 <a class="navbar-item" href="/about">关于</a>
                 
@@ -135,145 +134,53 @@
     <section class="section">
         <div class="container">
             <div class="columns">
-                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-09-25T01:12:24.000Z">2019-09-25</time>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    6 minutes read (About 926 words)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                MySQL 安装与配置
-            
-        </h1>
-        <div class="content">
-            <h3 id="摘要部分"><a href="#摘要部分" class="headerlink" title="摘要部分"></a>摘要部分</h3><ul>
-<li>MySQL安装步骤</li>
-<li>作者: 杨诗达</li>
-</ul>
-<a id="more"></a>
-
-<p>今天，我来盘点一下64位Windows安装MySQL8过程中遇到的坑。<br>首先点击下载<a href="https://dev.mysql.com/downloads/mysql/" target="_blank" rel="noopener">MySQL</a></p>
-<!-- more -->
-
-<p>进入网站之后，首先选择Windows系统，如下图，请选择下载第一个压缩包，然后点击No thanks, just start my download.（第一坑：书上说的下载二进制版本，请不要认为需要下载第二个压缩包，因为他只有调试和测试文件，新手安装并不需要）。<img src="https://github.com/18yang/-01/blob/%E5%AE%89%E8%A3%85mysql/MySQL.png?raw=true" alt></p>
-<p>下载完之后，解压到盘文件夹，例如我的C:\web\mysql-8.0.17-winx64，开始配置环境变量，右击 </p>
-<pre><code>此电脑 --- 属性 --- 高级系统设置 --- 环境变量</code></pre><p>在系统变量框中，双击path进入，选择新建，在其中加入你的文件夹的路径，如我的C:\web\mysql-8.0.17-winx64\bin    （ 。。。。。注意bin）</p>
-<p>设置完毕之后，在mysql-8.0.17-winx64文件夹下创建my.ini配置文件<br>输入</p>
-<pre><code>[client]
-# 设置mysql客户端默认字符集
-default-character-set=utf8
-
-[mysqld]
-# 设置3306端口
-port = 3306
-# 设置mysql的安装目录
-basedir=C:\\web\\mysql-8.0.11
-# 设置 mysql数据库的数据的存放目录，MySQL 8+ 不需要以下配置，系统自己生成即可，否则有可能报错
-# datadir=C:\\web\\sqldata
-# 允许最大连接数
-max_connections=20
-# 服务端使用的字符集默认为8比特编码的latin1字符集
-character-set-server=utf8
-# 创建新表时将使用的默认存储引擎
-default-storage-engine=INNODB</code></pre><p>接下来我们启动MySQL数据库：<br>以管理员的身份打开DOS界面<br><img src="https://github.com/18yang/-01/blob/%E5%AE%89%E8%A3%85mysql/cmd.png?raw=true" alt></p>
-<p>切换数据库文件所在（bin）目录：</p>
-<pre><code>cd C:\web\mysql-8.0.17-winx64\bin</code></pre><p>初始化数据库：</p>
-<pre><code>mysqld --initialize --console</code></pre><p>执行完之后，会出现root用户的密码，如：</p>
-<pre><code>...
- 2018-04-20T02:35:05.464644Z 5 [Note] [MY-010454] [Server] A temporary password is generated for root@localhost: APWCY5ws&amp;hjQ
-...</code></pre><p>APWCY5ws&amp;hjQ 就是初始密码，后续登录需要用到，你也可以在登陆后修改密码。（如何修改密码也是一个坑，后面介绍）</p>
-<p>输入以下安装命令：</p>
-<pre><code>mysqld install</code></pre><p>启动数据库请输入命令：</p>
-<pre><code>net start mysql</code></pre><p>（关闭数据库命令：net stop mysql  ，mysql为数据库名字<br>如果不知道名字，点击Windows+R  输入services.msc进入服务管理器。<br>找到MySQL开头的正在运行的服务，即为你安装的数据库名称，我的就叫MySQL）</p>
-<p>登录MySQL<br>输入以下格式：</p>
-<pre><code>mysql -h 主机名 -u 用户名 -p</code></pre><p>如果只是登录主机MySQL<br>只需要输入</p>
-<pre><code>mysql -h localhost -u root -p</code></pre><p>回车之后，会要求输入密码，输入密码即可登录，无密码直接按回车。</p>
-<p>登录成功后你将会看到 Welcome to the MySQL monitor… 的提示语</p>
-<p>然后命令提示符会一直以 mysq&gt; 加一个闪烁的光标等待命令的输入, 输入 exit 或 quit 退出登录。</p>
-<p>登录之后想要使用数据库，则必须改变密码<br>请注意自己MySQL的版本：<br>MySQL版本5.7.6版本以前用户可以使用如下命令：</p>
-<pre><code>mysql&gt; SET PASSWORD = PASSWORD(&apos;Xiaoming250&apos;); </code></pre><p>MySQL版本5.7.6版本开始的用户可以使用如下命令：</p>
-<pre><code>mysql&gt; ALTER USER USER() IDENTIFIED BY &apos;Xiaoming250&apos;;</code></pre><p>至此，数据库安装完毕，后续教程持续更新中。。。</p>
-<p>该文引至<a href="https://www.runoob.com/mysql/mysql-install.html" target="_blank" rel="noopener">runoob</a></p>
-<p>若有疑问或错误，欢迎进群询问</p>
-
-        </div>
-        
-        <div class="level is-size-7 is-uppercase">
-            <div class="level-start">
-                <div class="level-item">
-                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
-                    <a class="has-link-grey -link" href="/tags/MySQL/">MySQL</a>, <a class="has-link-grey -link" href="/tags/Technology/">Technology</a>
-                </div>
-            </div>
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-<div class="card card-transparent">
-    <div class="level post-navigation is-flex-wrap is-mobile">
-        
-        <div class="level-start">
-            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/09/27/a5-md/">
-                <i class="level-item fas fa-chevron-left"></i>
-                <span class="level-item">ACM比赛总结</span>
-            </a>
-        </div>
-        
-        
-        <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/2019/05/25/a1-md/">
-                <span class="level-item">比赛1</span>
-                <i class="level-item fas fa-chevron-right"></i>
-            </a>
-        </div>
-        
-    </div>
-</div>
-
-
-
-<div class="card">
+                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card widget">
     <div class="card-content">
-        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
-        
-<div id="valine-thread" class="content"></div>
-<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
-<script>
-    new Valine({
-        el: '#valine-thread' ,
-        notify: false,
-        verify: false,
-        app_id: 'xQzCCeniti0CqHY8nNLiBtB8-gzGzoHsz',
-        app_key: 'wududuwcCdNawqOXFLw1MG6C',
-        placeholder: 'Say something...'
-    });
-</script>
-
+        <div class="menu">
+            <h3 class="menu-label">
+                Tags
+            </h3>
+            <div class="field is-grouped is-grouped-multiline">
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/ACM/">
+                        <span class="tag">ACM</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/C-C/">
+                        <span class="tag">C/C++</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Competition-information/">
+                        <span class="tag">Competition_information</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/MySQL/">
+                        <span class="tag">MySQL</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Technology/">
+                        <span class="tag">Technology</span>
+                        <span class="tag is-grey">4</span>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
     </div>
-</div>
-</div>
+</div></div>
                 
 
 
@@ -834,7 +741,7 @@ default-storage-engine=INNODB</code></pre><p>接下来我们启动MySQL数据库
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/og_image.png" alt="MySQL 安装与配置" height="28">
+                    <img src="/images/og_image.png" alt="USC IHT TEAM" height="28">
                 
                 </a>
                 <p class="is-size-7">
