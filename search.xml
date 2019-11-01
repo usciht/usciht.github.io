@@ -1,6 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Java行为参数化</title>
+    <url>/2019/11/01/a8-md/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在软件工程中我们总是会遇到用户需求改变的问题，加入你要做一个农户的库存查询系统，今天农户跑过来问你能不能做一个查询绿苹果的数量的功能，于是你很轻松的就完成了，明年农户跑过来问你做一个查询苹果重量的功能…，于是你Copy了上次的代码，改变一下条件，很轻松的就完成了。</p>
+<a id="more"></a>
+
+<h2 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h2><p><br>这样一天天的农户的需求一直在改变，而你的代码要每次重复增加，一旦要修改其中的一段，那么工程量是巨大的，这毫无疑问不是一个好的解决方法。那么我们这时候就可以将行为参数化。</p>
+<blockquote>
+<p>下文中的实例都是假设在Apple对象有getColor和getWeight的前提下进行</p>
+<ol>
+<li>这时我们需要根据Apple的某些属性来返回一个boolean值。我们让它成为一个谓词。显然我们定义一个接口<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ApplePredicate</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">test</span><span class="params">(Apple apple)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">现在就可以用ApplePredicate的多个实现代表不同的选择标准了,比如</span><br><span class="line"></span><br><span class="line"><span class="comment">//仅仅选出重的苹果</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AppleHeavyWeightPredicate</span> <span class="keyword">implements</span> <span class="title">AplePredicate</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">test</span><span class="params">(Apple apple)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> apple.getWeight()&gt;<span class="number">150</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//仅仅选出绿色的苹果</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AppleGreenColorPredicate</span> <span class="keyword">implements</span> <span class="title">AplePredicate</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">test</span><span class="params">(Apple apple)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"green"</span>.equals(apple.getColor());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</blockquote>
+<ol start="2">
+<li><p>在这里，你的代码现在足够灵活，可以应对任何涉及苹果属性的需求变更了：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AppleRedAndHeavyPredicate</span> <span class="keyword">implements</span> <span class="title">ApplePredicate</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">test</span><span class="params">(Apple apple)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"red"</span>.equals(apple.getColor())</span><br><span class="line">        &amp;&amp; apple.getWeight()&gt;<span class="number">150</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">List&lt;Apple&gt; redAndHeavyApples = filter(inventory ,<span class="keyword">new</span> AppleRedAndHeavyPredicate());</span><br></pre></td></tr></table></figure>
+
+<p>现在filter方法的行为取决于你通过ApplePredicate对象传递的代码，换句话说，你把filt方法的行为参数化了！</p>
+<h3 id="前文所述都是为Java-8-特性之Lambda表达式做铺垫"><a href="#前文所述都是为Java-8-特性之Lambda表达式做铺垫" class="headerlink" title="前文所述都是为Java 8 特性之Lambda表达式做铺垫"></a>前文所述都是为Java 8 特性之Lambda表达式做铺垫</h3></li>
+<li><p>Lambda表达式的灵活运用</p>
+<blockquote>
+<p>相信大家在学习JAVA基础课程的时候都会学习Lambda表达式，很多同学也是云里雾里（我就是其中之一），仔细阅读下文，相信你一定会有所收获</p>
+<br>
+在前文
+</blockquote>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">List&lt;Apple&gt; redAndHeavyApples = filter(inventory ,<span class="keyword">new</span> AppleRedAndHeavyPredicate());</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>这样的代码看起来让人比较费解<br>然而在Java 8里可以用Lambda表达式重写为下面的样子：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">List&lt;Apple&gt; redAndHeavyApples = filter(inventory ,(Apple apple)-&gt;<span class="string">"red"</span>.equals(apple.getColor()));</span><br></pre></td></tr></table></figure>
+
+<p>不得不承认这段代码比之前的干净很多，这很好，<font color="red"><strong>因为它看起来更像问题陈述本身了</strong></font></p>
+]]></content>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Java讨论</title>
     <url>/2019/11/01/a3-md/</url>
     <content><![CDATA[<h3 id="1、JDK和JRE的区别与联系"><a href="#1、JDK和JRE的区别与联系" class="headerlink" title="1、JDK和JRE的区别与联系"></a>1、JDK和JRE的区别与联系</h3><p><strong>JRE</strong> : java runtime environment</p>
@@ -18,10 +57,10 @@
 
 ]]></content>
       <categories>
-        <category>java类</category>
+        <category>Java相关</category>
       </categories>
       <tags>
-        <tag>java</tag>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -217,6 +256,63 @@ default-storage-engine=INNODB</code></pre><p>接下来我们启动MySQL数据库
       </tags>
   </entry>
   <entry>
+    <title>如何配置github项目密匙</title>
+    <url>/2019/05/11/a2-md/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>关于如何配置自己的github项目密匙,在此之前需要先要拥有一个自己的GitHub账号;<br>以及已经安装了git工具.</p>
+<a id="more"></a>
+<h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><h3 id="具体操作"><a href="#具体操作" class="headerlink" title="具体操作"></a>具体操作</h3><blockquote>
+<ul>
+<li>首先找到自己的./ssh文件（有些可能找不到那也也是正常的，因为.ssh文件并不是初始化系统必虚的，该目录用于保存生成过的密匙匙，随便找个地方打开git bash，执行下面操作也有效）</li>
+<li>右击.ssh文件夹打开git bash窗口，在打开的git bash窗口里，输入下面信息</li>
+</ul>
+</blockquote>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="string">$</span> <span class="string">ssh-keygen</span> <span class="bullet">-t</span> <span class="string">rsa</span> <span class="bullet">-C</span> <span class="string">"youemail"</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<ul>
+<li>解释一下，youemail需要换成自己的注册GitHub账号的邮箱;然后在第一个提示句输入自己的github用户名_rsa ;<em>(可以换成其他的，这个用户名以后就是你的登陆句柄 )</em></li>
+<li>这个时候.ssh文件就已经建立了，在c盘的用户下面可以找到它，然后在这个文件里面打开git bash窗口（已经到打开过了可以跳过）</li>
+<li>然后继续在窗口内输入（一定要检查路径是不是在.ssh下，不然会很麻烦，ps-不堪回首）然后输入下面这句</li>
+</ul>
+</blockquote>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="string">$</span> <span class="string">touch</span> <span class="string">coufig</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<ul>
+<li>然后打开coufig文件输入以下内容，注意不要在语句前加缩进和空格（ps-不堪回首）下面的one用于代替我的用户名</li>
+</ul>
+</blockquote>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># one</span></span><br><span class="line"><span class="string">Host</span> <span class="string">one.github.com</span></span><br><span class="line"><span class="string">HostName</span> <span class="string">github.com</span></span><br><span class="line"><span class="string">PreferredAuthentications</span> <span class="string">publickey</span></span><br><span class="line"><span class="string">IdentityFile</span> <span class="string">~/.ssh/one_rsa</span></span><br><span class="line"><span class="string">User</span> <span class="string">one</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<ul>
+<li>注意不要改动 （详细参考<a href="https://www.cnblogs.com/xjnotxj/p/5845574.html?tdsourcetag=s_pcqq_aiomsg" target="_blank" rel="noopener">博客</a>)</li>
+<li>前面弄完，并且已经保存后，执行下一步操作。</li>
+</ul>
+</blockquote>
+<h3 id="添加公匙"><a href="#添加公匙" class="headerlink" title="添加公匙"></a>添加公匙</h3><blockquote>
+<ul>
+<li>打开自己的github账号，并且在设置里面的ssh里面添加ssh，密匙名字随便写，内容就要在.ssh文件里面找到自己建立的–比如我的是one_rsa.pub，将里面的内容复制到上面就行</li>
+<li>然后就是最后一步，测试</li>
+</ul>
+</blockquote>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="string">$ssh</span> <span class="bullet">-T</span> <span class="string">git@one.github.com</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<ul>
+<li>注意，我上面的one仅是样例，可以更改，可以与多个github绑定，设置不同的句柄，每个新账号的添加步骤一致。</li>
+</ul>
+</blockquote>
+<p>如果不知道.ssh路径在哪的 请参考大佬<a href="https://runindark.com/2019/03/23/My%20first%20blog/" target="_blank" rel="noopener">博客</a></p>
+]]></content>
+      <categories>
+        <category>github类</category>
+      </categories>
+      <tags>
+        <tag>Technology</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>如何恢复静态hexo</title>
     <url>/2019/05/11/a4-md/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>关于如何恢复自己的静态hexo文件，做个小总结</p>
@@ -285,63 +381,6 @@ default-storage-engine=INNODB</code></pre><p>接下来我们启动MySQL数据库
 </blockquote>
 <figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="string">$</span> <span class="string">git</span> <span class="string">pull</span></span><br><span class="line"><span class="string">$</span> <span class="string">hexo</span> <span class="string">d</span> <span class="bullet">-g</span></span><br><span class="line"><span class="string">$</span> <span class="string">git</span> <span class="string">add</span> <span class="bullet">-all</span></span><br><span class="line"><span class="string">$</span> <span class="string">git</span> <span class="string">commit</span> <span class="bullet">-m</span> <span class="string">"代码自述"</span></span><br><span class="line"><span class="string">$</span> <span class="string">git</span> <span class="string">push</span> <span class="bullet">-u</span> <span class="string">origin</span> <span class="string">hexo</span></span><br></pre></td></tr></table></figure>
 
-]]></content>
-      <categories>
-        <category>github类</category>
-      </categories>
-      <tags>
-        <tag>Technology</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>如何配置github项目密匙</title>
-    <url>/2019/05/11/a2-md/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>关于如何配置自己的github项目密匙,在此之前需要先要拥有一个自己的GitHub账号;<br>以及已经安装了git工具.</p>
-<a id="more"></a>
-<h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><h3 id="具体操作"><a href="#具体操作" class="headerlink" title="具体操作"></a>具体操作</h3><blockquote>
-<ul>
-<li>首先找到自己的./ssh文件（有些可能找不到那也也是正常的，因为.ssh文件并不是初始化系统必虚的，该目录用于保存生成过的密匙匙，随便找个地方打开git bash，执行下面操作也有效）</li>
-<li>右击.ssh文件夹打开git bash窗口，在打开的git bash窗口里，输入下面信息</li>
-</ul>
-</blockquote>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="string">$</span> <span class="string">ssh-keygen</span> <span class="bullet">-t</span> <span class="string">rsa</span> <span class="bullet">-C</span> <span class="string">"youemail"</span></span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<ul>
-<li>解释一下，youemail需要换成自己的注册GitHub账号的邮箱;然后在第一个提示句输入自己的github用户名_rsa ;<em>(可以换成其他的，这个用户名以后就是你的登陆句柄 )</em></li>
-<li>这个时候.ssh文件就已经建立了，在c盘的用户下面可以找到它，然后在这个文件里面打开git bash窗口（已经到打开过了可以跳过）</li>
-<li>然后继续在窗口内输入（一定要检查路径是不是在.ssh下，不然会很麻烦，ps-不堪回首）然后输入下面这句</li>
-</ul>
-</blockquote>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="string">$</span> <span class="string">touch</span> <span class="string">coufig</span></span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<ul>
-<li>然后打开coufig文件输入以下内容，注意不要在语句前加缩进和空格（ps-不堪回首）下面的one用于代替我的用户名</li>
-</ul>
-</blockquote>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># one</span></span><br><span class="line"><span class="string">Host</span> <span class="string">one.github.com</span></span><br><span class="line"><span class="string">HostName</span> <span class="string">github.com</span></span><br><span class="line"><span class="string">PreferredAuthentications</span> <span class="string">publickey</span></span><br><span class="line"><span class="string">IdentityFile</span> <span class="string">~/.ssh/one_rsa</span></span><br><span class="line"><span class="string">User</span> <span class="string">one</span></span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<ul>
-<li>注意不要改动 （详细参考<a href="https://www.cnblogs.com/xjnotxj/p/5845574.html?tdsourcetag=s_pcqq_aiomsg" target="_blank" rel="noopener">博客</a>)</li>
-<li>前面弄完，并且已经保存后，执行下一步操作。</li>
-</ul>
-</blockquote>
-<h3 id="添加公匙"><a href="#添加公匙" class="headerlink" title="添加公匙"></a>添加公匙</h3><blockquote>
-<ul>
-<li>打开自己的github账号，并且在设置里面的ssh里面添加ssh，密匙名字随便写，内容就要在.ssh文件里面找到自己建立的–比如我的是one_rsa.pub，将里面的内容复制到上面就行</li>
-<li>然后就是最后一步，测试</li>
-</ul>
-</blockquote>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="string">$ssh</span> <span class="bullet">-T</span> <span class="string">git@one.github.com</span></span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<ul>
-<li>注意，我上面的one仅是样例，可以更改，可以与多个github绑定，设置不同的句柄，每个新账号的添加步骤一致。</li>
-</ul>
-</blockquote>
-<p>如果不知道.ssh路径在哪的 请参考大佬<a href="https://runindark.com/2019/03/23/My%20first%20blog/" target="_blank" rel="noopener">博客</a></p>
 ]]></content>
       <categories>
         <category>github类</category>
