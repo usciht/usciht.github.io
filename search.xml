@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>博客md书写规范</title>
+    <url>/2019/11/01/a9-md/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>为了规范博客md的书写规范，简化工作流程，特写此章。<br><br><font color="red"><strong>请博客提交者尽量按照此章规定进行书写</strong></font></p>
+<a id="more"></a>
+<h2 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h2><h3 id="文章标准设置"><a href="#文章标准设置" class="headerlink" title="文章标准设置"></a>文章标准设置</h3><p>下面内容是文章的属性设置，不会在文章页面显示，但是很重要，将其加入到md文件的最前方即可。</p>
+<figure class="highlight md"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: 文章标题</span><br><span class="line">date: 2019-11-1 11:11:06</span><br><span class="line">author: 作者</span><br><span class="line">categroies: 大分类</span><br><span class="line">tags:</span><br><span class="line"><span class="bullet">    - </span>标签1</span><br><span class="line"><span class="bullet">    - </span>标签2</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+
+<p>关于文章的标签和分类问题，若是博客页面上已经有了标签，直接引用就好。若是没有，请联系博客项目组</p>
+<h3 id="文章内容标准"><a href="#文章内容标准" class="headerlink" title="文章内容标准"></a>文章内容标准</h3><p>下面是文章的形式设置.</p>
+<ul>
+<li>首先是前言，前言部分为作者对内容的总结，或者是提出问题的原因，或者遇到的问题形式。总之，告诉别人你这篇文章是针对什么的。</li>
+<li>关于内容部分，小标题用###表示 ，样式如下<figure class="highlight md"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="section">## 前言</span></span><br><span class="line"></span><br><span class="line"><span class="xml"><span class="comment">&lt;!-- more --&gt;</span></span></span><br><span class="line"><span class="section">## 内容</span></span><br><span class="line"></span><br><span class="line"><span class="section">### 小标题1</span></span><br><span class="line"></span><br><span class="line"><span class="section">### 小标题2</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="完整md样式"><a href="#完整md样式" class="headerlink" title="完整md样式"></a>完整md样式</h3><figure class="highlight md"><table><tr><td class="code"><pre><span class="line">title: 文章标题</span><br><span class="line">date: 2019-11-1 11:11:06</span><br><span class="line">author: 作者</span><br><span class="line">categroies: 大分类</span><br><span class="line">tags:</span><br><span class="line"><span class="bullet">    - </span>标签1</span><br><span class="line"><span class="bullet">    - </span>标签2</span><br><span class="line">---</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="section">## 前言</span></span><br><span class="line"></span><br><span class="line"><span class="xml"><span class="comment">&lt;!-- more --&gt;</span></span></span><br><span class="line"><span class="section">## 内容</span></span><br><span class="line"></span><br><span class="line"><span class="section">### 小标题1</span></span><br><span class="line"></span><br><span class="line"><span class="section">### 小标题2</span></span><br></pre></td></tr></table></figure>
+
+<p>-</p>
+]]></content>
+      <tags>
+        <tag>杂</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Java行为参数化</title>
     <url>/2019/11/01/a8-md/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在软件工程中我们总是会遇到用户需求改变的问题，加入你要做一个农户的库存查询系统，今天农户跑过来问你能不能做一个查询绿苹果的数量的功能，于是你很轻松的就完成了，明年农户跑过来问你做一个查询苹果重量的功能…，于是你Copy了上次的代码，改变一下条件，很轻松的就完成了。</p>
