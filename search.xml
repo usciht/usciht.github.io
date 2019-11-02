@@ -1,6 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>mysql 5.7 在Ubuntu上的安装</title>
+    <url>/2019/11/02/a10-md/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>为刚接触MySQL和LInux的新手准备的一份安装教程<br>MySQL在Linux上安装方式是多种多样的，docker，binary tar, from the Ubuntu repositories, from the Ubuntu repositories or official repository，甚至你可以自己从源代码编译一份都是没有问题的。这里为刚入门的新手准备了一份简单易行的安装方式。</p>
+<a id="more"></a>
+
+<h1 id="安装mysql-Ubuntu"><a href="#安装mysql-Ubuntu" class="headerlink" title="安装mysql-Ubuntu"></a>安装mysql-Ubuntu</h1><h2 id="1-安装-mysql"><a href="#1-安装-mysql" class="headerlink" title="1. 安装 mysql"></a>1. 安装 mysql</h2><p>在Ubuntu 18.04上，默认情况下，只有最新版本的 MySQL 包含在APT软件包存储库中。目前来说是MySQL 5.7。<br>首先在安装之前需要更新服务器上的软件包索引然后才能使用apt安装默认软件包：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ sudo apt update</span><br><span class="line">$ sudo apt install mysql-server</span><br></pre></td></tr></table></figure>
+
+<p>接下来便会开始安装MySQL，但这里不会提示设置密码或进行任何其他配置更改。（这里与我在ubuntu 16.04上安装不一样。从网上查阅资料得知：因为这会使MySQL的安装不安全，目前已经使用在安装后执行安全设置来代替这一点）</p>
+<h2 id="2-配置MySQL"><a href="#2-配置MySQL" class="headerlink" title="2.配置MySQL"></a>2.配置MySQL</h2><p>对于全新的安装模式，需要首先运行附带的安全脚本，这样才能进行接下来的数据库访问。 这改变了一些不太安全的默认选项，例如远程root登录和示例用户。 在旧版本的MySQL中，是需要手动初始化数据目录，但现在会自动完成。</p>
+<p>运行安全脚本：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ sudo mysql_secure_installation</span><br></pre></td></tr></table></figure>
+
+<p>接下来将会通过一系列提示来对MySQL安装的安全选项进行一些更改（这一步非常重要）</p>
+<h3 id="验证mysql安装"><a href="#验证mysql安装" class="headerlink" title="验证mysql安装"></a>验证mysql安装</h3><p>首先可以通过以下命令来查看mysql的运行状态：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ systemctl status mysql.service</span><br></pre></td></tr></table></figure>
+
+<h3 id="更改-设置root账户的密码"><a href="#更改-设置root账户的密码" class="headerlink" title="更改/设置root账户的密码"></a>更改/设置root账户的密码</h3><blockquote>
+<p>摘自MySQL官方文档<br>For MySQL 5.7.16 on Ubuntu 16.04, the default authentication plugin for user <code>root</code> (empty host) is <code>auth_socket</code>. This basically means you cannot set a password for that user, and root is <strong>always</strong> allowed to log in if it uses the socket (i.e. <code>localhost</code> as the host to connect to). This should be reasonable secure since only root can access that socket and if your root account is compromised, you’re already dead in the water. If you want to set a password for the root account anyway, you can change the plugin to <code>mysql_native_password</code>: </p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">update user set plugin=&apos;mysql_native_password&apos; where user=&apos;root&apos; and host=&apos;localhost&apos;;</span><br></pre></td></tr></table></figure>
+
+<p>and then change the root password.</p>
+<h2 id="设置远程连接"><a href="#设置远程连接" class="headerlink" title="设置远程连接"></a>设置远程连接</h2><p>需要设置 mysql 数据库支持外部或者远程访问，则需要把绑定 IP 地址改为 0.0.0.0，或者不写IP地址。因此编辑配置文件：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ sudo vim /etc/mysql/mysql.conf.d/mysqld.cnf</span><br></pre></td></tr></table></figure>
+
+<p>修改绑定地址为 0.0.0.0。原来默认绑定 127.0.0.1 注释掉。修改完 mysqld.cnf 文件有最好重新启动服务器。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">bind-address = 0.0.0.0</span><br><span class="line"># bind-address = 127.0.0.1</span><br></pre></td></tr></table></figure>
+
+<p>另外需要进入 MySQL 程序修改 root 账户的远程访问的权限。如果这一步不执行，则远程用 Navicat 访问时，会报 1130 错误。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ sudo mysql -u root -p</span><br></pre></td></tr></table></figure>
+
+<p>进入 MySQL 以后输入</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">grant all privileges on *.* to &apos;root&apos;@&apos;%&apos; identified by &apos;123456&apos; with grant option;</span><br><span class="line">grant all privileges on *.* to &apos;test&apos;@&apos;%&apos; identified by &apos;passwordtest&apos; with grant option;</span><br><span class="line">#其中，root表示数据路用户名，123456表示远程登陆的密码</span><br></pre></td></tr></table></figure>
+
+<p>刷新刚才修改的权限，使其生效</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">flush privileges;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>MySQL</tag>
+        <tag>Linux</tag>
+        <tag>Ubuntu</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>request对象</title>
+    <url>/2019/11/01/a11-md/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>JSP中数据到底传入哪了？如何得到用户的数据？以及request对象的基础使用方法。</p>
+<a id="more"></a>
+
+<h2 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h2><ol>
+<li><h3 id="基本的网页响应形式"><a href="#基本的网页响应形式" class="headerlink" title="基本的网页响应形式"></a>基本的网页响应形式</h3></li>
+</ol>
+<blockquote>
+<p>用户端界面发送请求–&gt;响应端界面</p>
+</blockquote>
+<ol start="2">
+<li><h3 id="request应用实例"><a href="#request应用实例" class="headerlink" title="request应用实例"></a>request应用实例</h3></li>
+</ol>
+<ul>
+<li><p>首先新建一个文件名为login.jsp文件，源码如下</p>
+  <figure class="highlight"><table><tr><td class="code"><pre><span class="line">&lt;%<span class="meta">@pagecontentType</span>=<span class="string">"text/html;charset=UTF-8"</span>language=<span class="string">"java"</span>%&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;title&gt;getRequest.jsp&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;div style=<span class="string">"text-align:center"</span>&gt;</span><br><span class="line">&lt;form action=<span class="string">"响应的界面名称"</span> method=<span class="string">"POST"</span>&gt;</span><br><span class="line">&lt;!--最常见的响应方式有两种,post和<span class="number">2</span>.get 一般为post，post的适合传输量较大的数据，比较隐蔽，get方式传输数据直接显示到url界面--&gt;</span><br><span class="line">&lt;tr&gt;</span><br><span class="line">&lt;td&gt;用户名称&lt;/td&gt;</span><br><span class="line">&lt;td&gt;&lt;input name="usename"type="text"&gt;&lt;/td&gt;</span><br><span class="line">&lt;/tr&gt;</span><br><span class="line">&lt;tr&gt;</span><br><span class="line">&lt;td&gt;用户密码&lt;/td&gt;</span><br><span class="line">&lt;td&gt;&lt;input name="password"type="password"&gt;&lt;/td&gt;</span><br><span class="line">&lt;/tr&gt;</span><br><span class="line">&lt;tr&gt;</span><br><span class="line">&lt;td&gt;&lt;input type="submit"value="登录"&gt;&lt;/td&gt;</span><br><span class="line">&lt;/tr&gt;</span><br><span class="line"></span><br><span class="line">&lt;/form&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如上文中的<code>&lt;input&gt;</code>属性中的name就是响应端能够得到的数据的名称，type则为该数据的数据类型（如：设置为”password”，用户密码输入时的内容将用”*”代替显示）其中我们把用户输入的数据放入<form>标签中，这样当用户点击type为submit按钮界面就会跳转到响应的页面中。</form></p>
+<br>
+<br></li>
+<li><p>如图所示</p>
+<blockquote>
+<p><img src="/2019/11/01/a11-md/example.png" alt></p>
+</blockquote>
+</li>
+</ul>
+<ol start="3">
+<li><h3 id="取得用户输入的数据"><a href="#取得用户输入的数据" class="headerlink" title="取得用户输入的数据"></a>取得用户输入的数据</h3></li>
+</ol>
+<ul>
+<li><p>首先新建一个名为”getInfo.jsp”JSP文件,源码如下：</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">&lt;%<span class="meta">@pagecontentType</span>=<span class="string">"text/html;charset=UTF-8"</span>language=<span class="string">"java"</span>%&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;title&gt;getInfo.jsp&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;%</span><br><span class="line">String name=request.getParameter(<span class="string">"usename"</span>);</span><br><span class="line">String password=request.getParameter(<span class="string">"password"</span>);</span><br><span class="line">%&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>这样用户的输入数据就保存在name和password中了，你就可以利用用户给出的数据执行一些操作。</p>
+</li>
+<li><p>关于数据的存储还有创建对象的方式，详细会在下次内容中讲解。</p>
+</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>JSP</tag>
+        <tag>request对象</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>博客md书写规范</title>
     <url>/2019/11/01/a9-md/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>为了规范博客md的书写规范，简化工作流程，特写此章。<br><br><font color="red"><strong>请博客提交者尽量按照此章规定进行书写</strong></font></p>
@@ -59,30 +151,6 @@
 
 <p>不得不承认这段代码比之前的干净很多，这很好，<font color="red"><strong>因为它看起来更像问题陈述本身了</strong></font></p>
 ]]></content>
-      <tags>
-        <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Java讨论</title>
-    <url>/2019/11/01/a3-md/</url>
-    <content><![CDATA[<h3 id="1、JDK和JRE的区别与联系"><a href="#1、JDK和JRE的区别与联系" class="headerlink" title="1、JDK和JRE的区别与联系"></a>1、JDK和JRE的区别与联系</h3><p><strong>JRE</strong> : java runtime environment</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Java运行时环境，包括java虚拟机，java的基础类;是使用java语言编写的程序所需要的软件环境</span><br></pre></td></tr></table></figure>
-
-<a id="more"></a>
-<p><strong>JDK</strong> :java development kit</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Java开发工具包，jdk包含了jre以及编译java源码的译码器javac，包含了很多调试和分析的工具</span><br></pre></td></tr></table></figure>
-
-<h3 id="2、-java的数据结构有哪些？"><a href="#2、-java的数据结构有哪些？" class="headerlink" title="2、    java的数据结构有哪些？"></a>2、    java的数据结构有哪些？</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">数组、栈、队列、图、树、堆、散列表</span><br></pre></td></tr></table></figure>
-
-<h3 id="3、-java中是否有指针"><a href="#3、-java中是否有指针" class="headerlink" title="3、 java中是否有指针"></a>3、 java中是否有指针</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">没有指针，了解java的引用与c/c++的指针的区别</span><br></pre></td></tr></table></figure>
-
-<h3 id="4、-、-的区别，以及是否存在-的使用？"><a href="#4、-、-的区别，以及是否存在-的使用？" class="headerlink" title="4、 =、== 的区别，以及是否存在=== 的使用？"></a>4、 =、== 的区别，以及是否存在=== 的使用？</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">=：赋值</span><br><span class="line">==：等于</span><br><span class="line">===：判断值及类型完全相等，严格等于</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>Java相关</category>
-      </categories>
       <tags>
         <tag>Java</tag>
       </tags>
