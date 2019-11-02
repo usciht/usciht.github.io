@@ -40,6 +40,9 @@
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">flush privileges;</span><br></pre></td></tr></table></figure>
 
 ]]></content>
+      <categories>
+        <category>MySql类</category>
+      </categories>
       <tags>
         <tag>MySQL</tag>
         <tag>Linux</tag>
@@ -87,6 +90,9 @@
 </li>
 </ul>
 ]]></content>
+      <categories>
+        <category>WEB类</category>
+      </categories>
       <tags>
         <tag>JSP</tag>
         <tag>request对象</tag>
@@ -98,7 +104,7 @@
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>为了规范博客md的书写规范，简化工作流程，特写此章。<br><br><font color="red"><strong>请博客提交者尽量按照此章规定进行书写</strong></font></p>
 <a id="more"></a>
 <h2 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h2><h3 id="文章标准设置"><a href="#文章标准设置" class="headerlink" title="文章标准设置"></a>文章标准设置</h3><p>下面内容是文章的属性设置，不会在文章页面显示，但是很重要，将其加入到md文件的最前方即可。</p>
-<figure class="highlight md"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: 文章标题</span><br><span class="line">date: 2019-11-1 11:11:06</span><br><span class="line">author: 作者</span><br><span class="line">categroies: 大分类</span><br><span class="line">tags:</span><br><span class="line"><span class="bullet">    - </span>标签1</span><br><span class="line"><span class="bullet">    - </span>标签2</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+<figure class="highlight md"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: 文章标题</span><br><span class="line">date: 2019-11-1 11:11:06</span><br><span class="line">author: 作者</span><br><span class="line">categories: 大分类</span><br><span class="line">tags:</span><br><span class="line"><span class="bullet">    - </span>标签1</span><br><span class="line"><span class="bullet">    - </span>标签2</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
 
 <p>关于文章的标签和分类问题，若是博客页面上已经有了标签，直接引用就好。若是没有，请联系博客项目组</p>
 <h3 id="文章内容标准"><a href="#文章内容标准" class="headerlink" title="文章内容标准"></a>文章内容标准</h3><p>下面是文章的形式设置.</p>
@@ -108,10 +114,13 @@
 
 </li>
 </ul>
-<h3 id="完整md样式"><a href="#完整md样式" class="headerlink" title="完整md样式"></a>完整md样式</h3><figure class="highlight md"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: 文章标题</span><br><span class="line">date: 2019-11-1 11:11:06</span><br><span class="line">author: 作者</span><br><span class="line">categroies: 大分类</span><br><span class="line">tags:</span><br><span class="line"><span class="bullet">    - </span>标签1</span><br><span class="line"><span class="bullet">    - </span>标签2</span><br><span class="line">---</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="section">## 前言</span></span><br><span class="line"></span><br><span class="line"><span class="xml"><span class="comment">&lt;!-- more --&gt;</span></span></span><br><span class="line"><span class="section">## 内容</span></span><br><span class="line"></span><br><span class="line"><span class="section">### 小标题1</span></span><br><span class="line"></span><br><span class="line"><span class="section">### 小标题2</span></span><br></pre></td></tr></table></figure>
+<h3 id="完整md样式"><a href="#完整md样式" class="headerlink" title="完整md样式"></a>完整md样式</h3><figure class="highlight md"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: 文章标题</span><br><span class="line">date: 2019-11-1 11:11:06</span><br><span class="line">author: 作者</span><br><span class="line">categories: 大分类</span><br><span class="line">tags:</span><br><span class="line"><span class="bullet">    - </span>标签1</span><br><span class="line"><span class="bullet">    - </span>标签2</span><br><span class="line">---</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="section">## 前言</span></span><br><span class="line"></span><br><span class="line"><span class="xml"><span class="comment">&lt;!-- more --&gt;</span></span></span><br><span class="line"><span class="section">## 内容</span></span><br><span class="line"></span><br><span class="line"><span class="section">### 小标题1</span></span><br><span class="line"></span><br><span class="line"><span class="section">### 小标题2</span></span><br></pre></td></tr></table></figure>
 
 <p>-</p>
 ]]></content>
+      <categories>
+        <category>团队项目类</category>
+      </categories>
       <tags>
         <tag>杂</tag>
       </tags>
@@ -151,6 +160,9 @@
 
 <p>不得不承认这段代码比之前的干净很多，这很好，<font color="red"><strong>因为它看起来更像问题陈述本身了</strong></font></p>
 ]]></content>
+      <categories>
+        <category>Java相关</category>
+      </categories>
       <tags>
         <tag>Java</tag>
       </tags>
@@ -289,8 +301,8 @@ default-storage-engine=INNODB</code></pre><p>接下来我们启动MySQL数据库
         <category>MySql类</category>
       </categories>
       <tags>
-        <tag>Technology</tag>
         <tag>MySQL</tag>
+        <tag>Technology</tag>
       </tags>
   </entry>
   <entry>
@@ -346,6 +358,63 @@ default-storage-engine=INNODB</code></pre><p>接下来我们启动MySQL数据库
       </categories>
       <tags>
         <tag>Competition_information</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>如何配置github项目密匙</title>
+    <url>/2019/05/11/a2-md/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>关于如何配置自己的github项目密匙,在此之前需要先要拥有一个自己的GitHub账号;<br>以及已经安装了git工具.</p>
+<a id="more"></a>
+<h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><h3 id="具体操作"><a href="#具体操作" class="headerlink" title="具体操作"></a>具体操作</h3><blockquote>
+<ul>
+<li>首先找到自己的./ssh文件（有些可能找不到那也也是正常的，因为.ssh文件并不是初始化系统必虚的，该目录用于保存生成过的密匙匙，随便找个地方打开git bash，执行下面操作也有效）</li>
+<li>右击.ssh文件夹打开git bash窗口，在打开的git bash窗口里，输入下面信息</li>
+</ul>
+</blockquote>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="string">$</span> <span class="string">ssh-keygen</span> <span class="bullet">-t</span> <span class="string">rsa</span> <span class="bullet">-C</span> <span class="string">"youemail"</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<ul>
+<li>解释一下，youemail需要换成自己的注册GitHub账号的邮箱;然后在第一个提示句输入自己的github用户名_rsa ;<em>(可以换成其他的，这个用户名以后就是你的登陆句柄 )</em></li>
+<li>这个时候.ssh文件就已经建立了，在c盘的用户下面可以找到它，然后在这个文件里面打开git bash窗口（已经到打开过了可以跳过）</li>
+<li>然后继续在窗口内输入（一定要检查路径是不是在.ssh下，不然会很麻烦，ps-不堪回首）然后输入下面这句</li>
+</ul>
+</blockquote>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="string">$</span> <span class="string">touch</span> <span class="string">coufig</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<ul>
+<li>然后打开coufig文件输入以下内容，注意不要在语句前加缩进和空格（ps-不堪回首）下面的one用于代替我的用户名</li>
+</ul>
+</blockquote>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># one</span></span><br><span class="line"><span class="string">Host</span> <span class="string">one.github.com</span></span><br><span class="line"><span class="string">HostName</span> <span class="string">github.com</span></span><br><span class="line"><span class="string">PreferredAuthentications</span> <span class="string">publickey</span></span><br><span class="line"><span class="string">IdentityFile</span> <span class="string">~/.ssh/one_rsa</span></span><br><span class="line"><span class="string">User</span> <span class="string">one</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<ul>
+<li>注意不要改动 （详细参考<a href="https://www.cnblogs.com/xjnotxj/p/5845574.html?tdsourcetag=s_pcqq_aiomsg" target="_blank" rel="noopener">博客</a>)</li>
+<li>前面弄完，并且已经保存后，执行下一步操作。</li>
+</ul>
+</blockquote>
+<h3 id="添加公匙"><a href="#添加公匙" class="headerlink" title="添加公匙"></a>添加公匙</h3><blockquote>
+<ul>
+<li>打开自己的github账号，并且在设置里面的ssh里面添加ssh，密匙名字随便写，内容就要在.ssh文件里面找到自己建立的–比如我的是one_rsa.pub，将里面的内容复制到上面就行</li>
+<li>然后就是最后一步，测试</li>
+</ul>
+</blockquote>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="string">$ssh</span> <span class="bullet">-T</span> <span class="string">git@one.github.com</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<ul>
+<li>注意，我上面的one仅是样例，可以更改，可以与多个github绑定，设置不同的句柄，每个新账号的添加步骤一致。</li>
+</ul>
+</blockquote>
+<p>如果不知道.ssh路径在哪的 请参考大佬<a href="https://runindark.com/2019/03/23/My%20first%20blog/" target="_blank" rel="noopener">博客</a></p>
+]]></content>
+      <categories>
+        <category>github类</category>
+      </categories>
+      <tags>
+        <tag>Technology</tag>
       </tags>
   </entry>
   <entry>
@@ -417,63 +486,6 @@ default-storage-engine=INNODB</code></pre><p>接下来我们启动MySQL数据库
 </blockquote>
 <figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="string">$</span> <span class="string">git</span> <span class="string">pull</span></span><br><span class="line"><span class="string">$</span> <span class="string">hexo</span> <span class="string">d</span> <span class="bullet">-g</span></span><br><span class="line"><span class="string">$</span> <span class="string">git</span> <span class="string">add</span> <span class="bullet">-all</span></span><br><span class="line"><span class="string">$</span> <span class="string">git</span> <span class="string">commit</span> <span class="bullet">-m</span> <span class="string">"代码自述"</span></span><br><span class="line"><span class="string">$</span> <span class="string">git</span> <span class="string">push</span> <span class="bullet">-u</span> <span class="string">origin</span> <span class="string">hexo</span></span><br></pre></td></tr></table></figure>
 
-]]></content>
-      <categories>
-        <category>github类</category>
-      </categories>
-      <tags>
-        <tag>Technology</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>如何配置github项目密匙</title>
-    <url>/2019/05/11/a2-md/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>关于如何配置自己的github项目密匙,在此之前需要先要拥有一个自己的GitHub账号;<br>以及已经安装了git工具.</p>
-<a id="more"></a>
-<h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><h3 id="具体操作"><a href="#具体操作" class="headerlink" title="具体操作"></a>具体操作</h3><blockquote>
-<ul>
-<li>首先找到自己的./ssh文件（有些可能找不到那也也是正常的，因为.ssh文件并不是初始化系统必虚的，该目录用于保存生成过的密匙匙，随便找个地方打开git bash，执行下面操作也有效）</li>
-<li>右击.ssh文件夹打开git bash窗口，在打开的git bash窗口里，输入下面信息</li>
-</ul>
-</blockquote>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="string">$</span> <span class="string">ssh-keygen</span> <span class="bullet">-t</span> <span class="string">rsa</span> <span class="bullet">-C</span> <span class="string">"youemail"</span></span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<ul>
-<li>解释一下，youemail需要换成自己的注册GitHub账号的邮箱;然后在第一个提示句输入自己的github用户名_rsa ;<em>(可以换成其他的，这个用户名以后就是你的登陆句柄 )</em></li>
-<li>这个时候.ssh文件就已经建立了，在c盘的用户下面可以找到它，然后在这个文件里面打开git bash窗口（已经到打开过了可以跳过）</li>
-<li>然后继续在窗口内输入（一定要检查路径是不是在.ssh下，不然会很麻烦，ps-不堪回首）然后输入下面这句</li>
-</ul>
-</blockquote>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="string">$</span> <span class="string">touch</span> <span class="string">coufig</span></span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<ul>
-<li>然后打开coufig文件输入以下内容，注意不要在语句前加缩进和空格（ps-不堪回首）下面的one用于代替我的用户名</li>
-</ul>
-</blockquote>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># one</span></span><br><span class="line"><span class="string">Host</span> <span class="string">one.github.com</span></span><br><span class="line"><span class="string">HostName</span> <span class="string">github.com</span></span><br><span class="line"><span class="string">PreferredAuthentications</span> <span class="string">publickey</span></span><br><span class="line"><span class="string">IdentityFile</span> <span class="string">~/.ssh/one_rsa</span></span><br><span class="line"><span class="string">User</span> <span class="string">one</span></span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<ul>
-<li>注意不要改动 （详细参考<a href="https://www.cnblogs.com/xjnotxj/p/5845574.html?tdsourcetag=s_pcqq_aiomsg" target="_blank" rel="noopener">博客</a>)</li>
-<li>前面弄完，并且已经保存后，执行下一步操作。</li>
-</ul>
-</blockquote>
-<h3 id="添加公匙"><a href="#添加公匙" class="headerlink" title="添加公匙"></a>添加公匙</h3><blockquote>
-<ul>
-<li>打开自己的github账号，并且在设置里面的ssh里面添加ssh，密匙名字随便写，内容就要在.ssh文件里面找到自己建立的–比如我的是one_rsa.pub，将里面的内容复制到上面就行</li>
-<li>然后就是最后一步，测试</li>
-</ul>
-</blockquote>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="string">$ssh</span> <span class="bullet">-T</span> <span class="string">git@one.github.com</span></span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<ul>
-<li>注意，我上面的one仅是样例，可以更改，可以与多个github绑定，设置不同的句柄，每个新账号的添加步骤一致。</li>
-</ul>
-</blockquote>
-<p>如果不知道.ssh路径在哪的 请参考大佬<a href="https://runindark.com/2019/03/23/My%20first%20blog/" target="_blank" rel="noopener">博客</a></p>
 ]]></content>
       <categories>
         <category>github类</category>
