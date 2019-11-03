@@ -159,6 +159,24 @@
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line">List&lt;Apple&gt; redAndHeavyApples = filter(inventory ,(Apple apple)-&gt;<span class="string">"red"</span>.equals(apple.getColor()));</span><br></pre></td></tr></table></figure>
 
 <p>不得不承认这段代码比之前的干净很多，这很好，<font color="red"><strong>因为它看起来更像问题陈述本身了</strong></font></p>
+<p>在上文中我们就说过，如果农户要选择一个又红又中的苹果，需要进行排序操作，我们可以为这个对象写两个比较函数，简单一点的是利用匿名内部类实现功能，更简单的就是行为参数化。<br><br></p>
+<h2 id="那么，还有其他的方法吗？"><a href="#那么，还有其他的方法吗？" class="headerlink" title="那么，还有其他的方法吗？"></a><font color="red">那么，还有其他的方法吗？</font></h2><p>在JAVA中我们还有一个叫做比较器链，如果你在排序中发现两个苹果一样重怎么办？哪个苹果应该排在前面呢？我们这时定义两个方法，sort1()用来选择排序红的苹果，sort()2用来选择排序重的苹果，此时我们的方法就显得繁琐。因此，比较器链和为此复合就出来了：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">inventory.sort(comparing(Apple::getWeight)</span><br><span class="line">                .thenComparing(Apple::getColor));//当两个苹果一样重的时候进一步按照颜色排序</span><br></pre></td></tr></table></figure>
+
+<p>谓词接口包括三个方法</p>
+<ol>
+<li>negate</li>
+<li>and</li>
+<li>or<blockquote>
+<p>比如 redApple.negate();<br>该函数的意思就是红苹果的非，即不是红苹果<br>谓词接口示范代码：</p>
+<pre><code>Predicate &lt;Apple&gt; redAndHeavyAppleOrGreen = 
+ redApple.and(a-&gt;a.getWeight()&gt;150)
+         .or(a-&gt;&quot;green&quot;.equals(a.getColor()));</code></pre></blockquote>
+<h3 id="请注意，谓词接口的优先级为从左到右，如："><a href="#请注意，谓词接口的优先级为从左到右，如：" class="headerlink" title="请注意，谓词接口的优先级为从左到右，如："></a>请注意，谓词接口的优先级为从左到右，如：</h3><blockquote>
+<p>a.or(b).and(c) 可以看作 (a||b)&amp;&amp;c</p>
+</blockquote>
+</li>
+</ol>
 ]]></content>
       <categories>
         <category>Java相关</category>
