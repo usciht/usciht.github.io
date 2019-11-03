@@ -1,6 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Java行为参数化</title>
+    <url>/2019/11/03/a8-md/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在软件工程中我们总是会遇到用户需求改变的问题，加入你要做一个农户的库存查询系统，今天农户跑过来问你能不能做一个查询绿苹果的数量的功能，于是你很轻松的就完成了，明年农户跑过来问你做一个查询苹果重量的功能…，于是你Copy了上次的代码，改变一下条件，很轻松的就完成了。</p>
+<a id="more"></a>
+
+<h2 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h2><p><br>这样一天天的农户的需求一直在改变，而你的代码要每次重复增加，一旦要修改其中的一段，那么工程量是巨大的，这毫无疑问不是一个好的解决方法。那么我们这时候就可以将行为参数化。</p>
+<blockquote>
+<p>下文中的实例都是假设在Apple对象有getColor和getWeight的前提下进行</p>
+<ol>
+<li>这时我们需要根据Apple的某些属性来返回一个boolean值。我们让它成为一个谓词。显然我们定义一个接口<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ApplePredicate</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">test</span><span class="params">(Apple apple)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">现在就可以用ApplePredicate的多个实现代表不同的选择标准了,比如</span><br><span class="line"></span><br><span class="line"><span class="comment">//仅仅选出重的苹果</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AppleHeavyWeightPredicate</span> <span class="keyword">implements</span> <span class="title">AplePredicate</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">test</span><span class="params">(Apple apple)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> apple.getWeight()&gt;<span class="number">150</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//仅仅选出绿色的苹果</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AppleGreenColorPredicate</span> <span class="keyword">implements</span> <span class="title">AplePredicate</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">test</span><span class="params">(Apple apple)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"green"</span>.equals(apple.getColor());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</blockquote>
+<ol start="2">
+<li><p>在这里，你的代码现在足够灵活，可以应对任何涉及苹果属性的需求变更了：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AppleRedAndHeavyPredicate</span> <span class="keyword">implements</span> <span class="title">ApplePredicate</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">test</span><span class="params">(Apple apple)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"red"</span>.equals(apple.getColor())</span><br><span class="line">        &amp;&amp; apple.getWeight()&gt;<span class="number">150</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">List&lt;Apple&gt; redAndHeavyApples = filter(inventory ,<span class="keyword">new</span> AppleRedAndHeavyPredicate());</span><br></pre></td></tr></table></figure>
+
+<p>现在filter方法的行为取决于你通过ApplePredicate对象传递的代码，换句话说，你把filt方法的行为参数化了！</p>
+<h3 id="前文所述都是为Java-8-特性之Lambda表达式做铺垫"><a href="#前文所述都是为Java-8-特性之Lambda表达式做铺垫" class="headerlink" title="前文所述都是为Java 8 特性之Lambda表达式做铺垫"></a>前文所述都是为Java 8 特性之Lambda表达式做铺垫</h3></li>
+<li><p>Lambda表达式的灵活运用</p>
+<blockquote>
+<p>相信大家在学习JAVA基础课程的时候都会学习Lambda表达式，很多同学也是云里雾里（我就是其中之一），仔细阅读下文，相信你一定会有所收获</p>
+<br>
+在前文
+</blockquote>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">List&lt;Apple&gt; redAndHeavyApples = filter(inventory ,<span class="keyword">new</span> AppleRedAndHeavyPredicate());</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>这样的代码看起来让人比较费解<br>然而在Java 8里可以用Lambda表达式重写为下面的样子：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">List&lt;Apple&gt; redAndHeavyApples = filter(inventory ,(Apple apple)-&gt;<span class="string">"red"</span>.equals(apple.getColor()));</span><br></pre></td></tr></table></figure>
+
+<p>不得不承认这段代码比之前的干净很多，这很好，<font color="red"><strong>因为它看起来更像问题陈述本身了</strong></font></p>
+<p>在上文中我们就说过，如果农户要选择一个又红又中的苹果，需要进行排序操作，我们可以为这个对象写两个比较函数，简单一点的是利用匿名内部类实现功能，更简单的就是行为参数化。<br><br></p>
+<h2 id="那么，还有其他的方法吗？"><a href="#那么，还有其他的方法吗？" class="headerlink" title="那么，还有其他的方法吗？"></a><font color="red">那么，还有其他的方法吗？</font></h2><p>在JAVA中我们还有一个叫做比较器链，如果你在排序中发现两个苹果一样重怎么办？哪个苹果应该排在前面呢？我们这时定义两个方法，sort1()用来选择排序红的苹果，sort()2用来选择排序重的苹果，此时我们的方法就显得繁琐。因此，比较器链和为此复合就出来了：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">inventory.sort(comparing(Apple::getWeight)</span><br><span class="line">                .thenComparing(Apple::getColor));//当两个苹果一样重的时候进一步按照颜色排序</span><br></pre></td></tr></table></figure>
+
+<p>谓词接口包括三个方法</p>
+<ol>
+<li>negate</li>
+<li>and</li>
+<li>or<blockquote>
+<p>比如 redApple.negate();<br>该函数的意思就是红苹果的非，即不是红苹果<br>谓词接口示范代码：</p>
+<pre><code>Predicate &lt;Apple&gt; redAndHeavyAppleOrGreen = 
+ redApple.and(a-&gt;a.getWeight()&gt;150)
+         .or(a-&gt;&quot;green&quot;.equals(a.getColor()));</code></pre></blockquote>
+<h3 id="请注意，谓词接口的优先级为从左到右，如："><a href="#请注意，谓词接口的优先级为从左到右，如：" class="headerlink" title="请注意，谓词接口的优先级为从左到右，如："></a>请注意，谓词接口的优先级为从左到右，如：</h3><blockquote>
+<p>a.or(b).and(c) 可以看作 (a||b)&amp;&amp;c</p>
+</blockquote>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>Java相关</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>mysql 5.7 在Ubuntu上的安装</title>
     <url>/2019/11/02/a10-md/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>为刚接触MySQL和LInux的新手准备的一份安装教程<br>MySQL在Linux上安装方式是多种多样的，docker，binary tar, from the Ubuntu repositories, from the Ubuntu repositories or official repository，甚至你可以自己从源代码编译一份都是没有问题的。这里为刚入门的新手准备了一份简单易行的安装方式。</p>
@@ -123,66 +183,6 @@
       </categories>
       <tags>
         <tag>杂</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Java行为参数化</title>
-    <url>/2019/11/01/a8-md/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在软件工程中我们总是会遇到用户需求改变的问题，加入你要做一个农户的库存查询系统，今天农户跑过来问你能不能做一个查询绿苹果的数量的功能，于是你很轻松的就完成了，明年农户跑过来问你做一个查询苹果重量的功能…，于是你Copy了上次的代码，改变一下条件，很轻松的就完成了。</p>
-<a id="more"></a>
-
-<h2 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h2><p><br>这样一天天的农户的需求一直在改变，而你的代码要每次重复增加，一旦要修改其中的一段，那么工程量是巨大的，这毫无疑问不是一个好的解决方法。那么我们这时候就可以将行为参数化。</p>
-<blockquote>
-<p>下文中的实例都是假设在Apple对象有getColor和getWeight的前提下进行</p>
-<ol>
-<li>这时我们需要根据Apple的某些属性来返回一个boolean值。我们让它成为一个谓词。显然我们定义一个接口<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ApplePredicate</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">test</span><span class="params">(Apple apple)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">现在就可以用ApplePredicate的多个实现代表不同的选择标准了,比如</span><br><span class="line"></span><br><span class="line"><span class="comment">//仅仅选出重的苹果</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AppleHeavyWeightPredicate</span> <span class="keyword">implements</span> <span class="title">AplePredicate</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">test</span><span class="params">(Apple apple)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> apple.getWeight()&gt;<span class="number">150</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//仅仅选出绿色的苹果</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AppleGreenColorPredicate</span> <span class="keyword">implements</span> <span class="title">AplePredicate</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">test</span><span class="params">(Apple apple)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"green"</span>.equals(apple.getColor());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-</blockquote>
-<ol start="2">
-<li><p>在这里，你的代码现在足够灵活，可以应对任何涉及苹果属性的需求变更了：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AppleRedAndHeavyPredicate</span> <span class="keyword">implements</span> <span class="title">ApplePredicate</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">test</span><span class="params">(Apple apple)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"red"</span>.equals(apple.getColor())</span><br><span class="line">        &amp;&amp; apple.getWeight()&gt;<span class="number">150</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">List&lt;Apple&gt; redAndHeavyApples = filter(inventory ,<span class="keyword">new</span> AppleRedAndHeavyPredicate());</span><br></pre></td></tr></table></figure>
-
-<p>现在filter方法的行为取决于你通过ApplePredicate对象传递的代码，换句话说，你把filt方法的行为参数化了！</p>
-<h3 id="前文所述都是为Java-8-特性之Lambda表达式做铺垫"><a href="#前文所述都是为Java-8-特性之Lambda表达式做铺垫" class="headerlink" title="前文所述都是为Java 8 特性之Lambda表达式做铺垫"></a>前文所述都是为Java 8 特性之Lambda表达式做铺垫</h3></li>
-<li><p>Lambda表达式的灵活运用</p>
-<blockquote>
-<p>相信大家在学习JAVA基础课程的时候都会学习Lambda表达式，很多同学也是云里雾里（我就是其中之一），仔细阅读下文，相信你一定会有所收获</p>
-<br>
-在前文
-</blockquote>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">List&lt;Apple&gt; redAndHeavyApples = filter(inventory ,<span class="keyword">new</span> AppleRedAndHeavyPredicate());</span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-<p>这样的代码看起来让人比较费解<br>然而在Java 8里可以用Lambda表达式重写为下面的样子：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">List&lt;Apple&gt; redAndHeavyApples = filter(inventory ,(Apple apple)-&gt;<span class="string">"red"</span>.equals(apple.getColor()));</span><br></pre></td></tr></table></figure>
-
-<p>不得不承认这段代码比之前的干净很多，这很好，<font color="red"><strong>因为它看起来更像问题陈述本身了</strong></font></p>
-<p>在上文中我们就说过，如果农户要选择一个又红又中的苹果，需要进行排序操作，我们可以为这个对象写两个比较函数，简单一点的是利用匿名内部类实现功能，更简单的就是行为参数化。<br><br></p>
-<h2 id="那么，还有其他的方法吗？"><a href="#那么，还有其他的方法吗？" class="headerlink" title="那么，还有其他的方法吗？"></a><font color="red">那么，还有其他的方法吗？</font></h2><p>在JAVA中我们还有一个叫做比较器链，如果你在排序中发现两个苹果一样重怎么办？哪个苹果应该排在前面呢？我们这时定义两个方法，sort1()用来选择排序红的苹果，sort()2用来选择排序重的苹果，此时我们的方法就显得繁琐。因此，比较器链和为此复合就出来了：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">inventory.sort(comparing(Apple::getWeight)</span><br><span class="line">                .thenComparing(Apple::getColor));//当两个苹果一样重的时候进一步按照颜色排序</span><br></pre></td></tr></table></figure>
-
-<p>谓词接口包括三个方法</p>
-<ol>
-<li>negate</li>
-<li>and</li>
-<li>or<blockquote>
-<p>比如 redApple.negate();<br>该函数的意思就是红苹果的非，即不是红苹果<br>谓词接口示范代码：</p>
-<pre><code>Predicate &lt;Apple&gt; redAndHeavyAppleOrGreen = 
- redApple.and(a-&gt;a.getWeight()&gt;150)
-         .or(a-&gt;&quot;green&quot;.equals(a.getColor()));</code></pre></blockquote>
-<h3 id="请注意，谓词接口的优先级为从左到右，如："><a href="#请注意，谓词接口的优先级为从左到右，如：" class="headerlink" title="请注意，谓词接口的优先级为从左到右，如："></a>请注意，谓词接口的优先级为从左到右，如：</h3><blockquote>
-<p>a.or(b).and(c) 可以看作 (a||b)&amp;&amp;c</p>
-</blockquote>
-</li>
-</ol>
-]]></content>
-      <categories>
-        <category>Java相关</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
